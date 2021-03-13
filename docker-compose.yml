@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+  php:
+    image: transfer-app
+    volumes:
+      - ./:/app
+    ports:
+      - 8000:8000
+    links:
+      - database
+
+  database:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: db_transfers
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./sql:/var/lib/mysql
