@@ -17,4 +17,9 @@ abstract class User
         $this->cpf = $cpf;
         $this->email = $email;
     }
+
+    public function isTransferable(): bool
+    {
+        return $this->category == Category::USER;
+    }
 }
