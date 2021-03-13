@@ -4,7 +4,7 @@ namespace App\Domain\User;
 
 class UserFactory
 {
-    public function create(string $name, string $cpf, string $email, string $category)
+    public static function create(string $name, string $cpf, string $email, string $category)
     {
         $newCpf = new CPF($cpf);
         $newEmail = new Email($email);

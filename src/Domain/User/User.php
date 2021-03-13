@@ -22,4 +22,34 @@ abstract class User
     {
         return $this->category == Category::USER;
     }
+
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    public function cpf(): string
+    {
+        return $this->cpf;
+    }
+
+    public function email(): string
+    {
+        return $this->email;
+    }
+
+    public function category(): string
+    {
+        return $this->category;
+    }
+
+    public function setPassword(string $password): string
+    {
+        $this->password = $password;
+    }
+
+    public function password(): string
+    {
+        return $this->password;
+    }
 }
