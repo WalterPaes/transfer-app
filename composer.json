@@ -1,7 +1,9 @@
 {
   "require": {
     "slim/slim": "4.*",
-    "slim/psr7": "^1.3"
+    "slim/psr7": "^1.3",
+    "robmorgan/phinx": "^0.12.5",
+    "illuminate/database": "^8.32"
   },
   "autoload": {
     "psr-4": {

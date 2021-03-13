@@ -5,3 +5,6 @@ run:
 build-and-run:
 	make build
 	make run
+
+migration:
+	php vendor/bin/phinx
