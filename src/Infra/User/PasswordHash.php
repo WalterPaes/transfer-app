@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Infra\Encrypt;
+namespace App\Infra\User;
 
-use App\Domain\Encrypt\PasswordEncrypt;
+use App\Domain\User\PasswordEncrypt;
 
 class PasswordHash implements PasswordEncrypt
 {

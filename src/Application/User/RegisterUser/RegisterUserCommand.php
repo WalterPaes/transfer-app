@@ -1,8 +1,11 @@
 <?php
 
-use App\Domain\Encrypt\PasswordEncrypt;
+namespace App\Application\User\RegisterUser;
+
+use App\Domain\User\PasswordEncrypt;
 use App\Domain\User\UserFactory;
 use App\Domain\User\UserRepository;
+use Exception;
 
 class RegisterUserCommand
 {
@@ -30,10 +33,9 @@ class RegisterUserCommand
             $registerUserDTO->name,
             $registerUserDTO->cpf,
             $registerUserDTO->email,
-            $registerUserDTO->category,
-            $this->passwordEncrypt->encrypt($registerUserDTO->password),
-            );
-
+            $registerUserDTO->category
+        );
+        $user->setPassword($this->passwordEncrypt->encrypt($registerUserDTO->password));
         $this->repository->save($user);
     }
 }

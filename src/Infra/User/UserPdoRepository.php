@@ -18,7 +18,8 @@ class UserPdoRepository implements UserRepository
 
     public function save(User $user): void
     {
-        $sql = 'INSERT INTO users (:name, :cpf, :email, :password, :category)';
+        $sql = 'INSERT INTO users (name, cpf, email, password, category) 
+                VALUES (:name, :cpf, :email, :password, :category)';
         $stmt = $this->connection->prepare($sql);
 
         $stmt->bindValue('name', $user->name());

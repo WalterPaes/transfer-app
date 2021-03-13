@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Application\User\RegisterUser;
+
 class RegisterUserDTO
 {
     public string $name;

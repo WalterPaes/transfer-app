@@ -13,10 +13,6 @@ class PdoConnection
     {
     }
 
-    private function __clone()
-    {
-    }
-
     public static function getConnection()
     {
         if (!isset(self::$pdo)) {
@@ -34,5 +30,13 @@ class PdoConnection
             }
         }
         return self::$pdo;
+    }
+
+    private function __clone()
+    {
+    }
+
+    private function __wakeup()
+    {
     }
 }

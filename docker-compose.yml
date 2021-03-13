@@ -17,5 +17,3 @@ services:
     environment:
       MYSQL_DATABASE: db_transfers
       MYSQL_ROOT_PASSWORD: root
-    volumes:
-      - ./sql:/var/lib/mysql

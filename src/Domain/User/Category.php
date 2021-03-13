@@ -12,7 +12,7 @@ class Category
 
     public function __construct(string $category)
     {
-        if ($category != self::USER || $category != self::SHOPMAN) {
+        if (!($category == self::USER || $category == self::SHOPMAN)) {
             throw new \Exception('invalid category');
         }
 

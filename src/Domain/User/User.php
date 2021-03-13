@@ -43,7 +43,7 @@ abstract class User
         return $this->category;
     }
 
-    public function setPassword(string $password): string
+    public function setPassword(string $password)
     {
         $this->password = $password;
     }
