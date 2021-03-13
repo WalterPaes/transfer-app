@@ -2,21 +2,23 @@
 
 namespace App\Domain\User;
 
+use Exception;
+
 class UserFactory
 {
-    public static function create(string $name, string $cpf, string $email, string $category)
+    public static function create(string $name, string $cpf, string $email, string $category): User
     {
-        $newCpf = new CPF($cpf);
-        $newEmail = new Email($email);
-
-        if ($category == Category::USER) {
-            return new CommonUser($name, $newCpf, $newEmail);
+        if ($category != Category::USER || $category != Category::SHOPMAN) {
+            throw new Exception('invalid user category');
         }
+
+        $userCpf = new CPF($cpf);
+        $userEmail = new Email($email);
 
         if ($category == Category::SHOPMAN) {
-            return new ShopmanUser($name, $newCpf, $newEmail);
+            return new ShopmanUser($name, $userCpf, $userEmail);
         }
 
-        throw new \Exception('invalid user category');
+        return new CommonUser($name, $userCpf, $userEmail);
     }
 }

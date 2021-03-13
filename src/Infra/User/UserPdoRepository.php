@@ -5,6 +5,7 @@ namespace App\Infra\User;
 use App\Domain\User\User;
 use App\Domain\User\UserFactory;
 use App\Domain\User\UserRepository;
+use PDO;
 
 class UserPdoRepository implements UserRepository
 {
