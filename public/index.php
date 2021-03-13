@@ -7,13 +7,13 @@ use Slim\Factory\AppFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createImmutable('../');
 $dotenv->load();
 
 $app = AppFactory::create();
 
 $app->get('/', function (Request $request, Response $response, $args) {
-    $response->getBody()->write("Hello world!");
+    $response->getBody()->write("Hello");
     return $response;
 });
 

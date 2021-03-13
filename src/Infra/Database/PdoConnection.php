@@ -21,10 +21,10 @@ class PdoConnection
     {
         if (!isset(self::$pdo)) {
             try {
-                $dbHost = getenv('DB_HOST');
-                $dbName = getenv('DB_NAME');
-                $dbUser = getenv('DB_USER');
-                $dbPass = getenv('DB_PASS');
+                $dbHost = $_ENV['DB_HOST'];
+                $dbName = $_ENV['DB_NAME'];
+                $dbUser = $_ENV['DB_USER'];
+                $dbPass = $_ENV['DB_PASS'];
 
                 self::$pdo = new PDO("mysql:host={$dbHost}; dbname={$dbName}; charset=utf8;", $dbUser, $dbPass, [
                     PDO::ATTR_PERSISTENT => true
