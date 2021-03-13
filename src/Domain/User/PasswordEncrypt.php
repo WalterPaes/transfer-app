@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Encrypt;
+namespace App\Domain\User;
 
 interface PasswordEncrypt
 {

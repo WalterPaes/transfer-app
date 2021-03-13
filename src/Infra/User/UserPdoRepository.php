@@ -5,6 +5,7 @@ namespace App\Infra\User;
 use App\Domain\User\User;
 use App\Domain\User\UserFactory;
 use App\Domain\User\UserRepository;
+use PDO;
 
 class UserPdoRepository implements UserRepository
 {
@@ -17,7 +18,8 @@ class UserPdoRepository implements UserRepository
 
     public function save(User $user): void
     {
-        $sql = 'INSERT INTO users (:name, :cpf, :email, :password, :category)';
+        $sql = 'INSERT INTO users (name, cpf, email, password, category) 
+                VALUES (:name, :cpf, :email, :password, :category)';
         $stmt = $this->connection->prepare($sql);
 
         $stmt->bindValue('name', $user->name());
