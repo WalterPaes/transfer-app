@@ -10,13 +10,6 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 class UserCapsuleRepository implements UserRepository
 {
-    private DB $connection;
-
-    public function __construct(DB $db)
-    {
-        $this->connection = $db;
-    }
-
     public function save(User $user): void
     {
         DB::table('users')
