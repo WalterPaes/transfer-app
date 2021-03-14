@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Transaction;
 
-use App\Application\Transaction\AuthorizeTransaction\TransactionAuthorizer;
+use App\Application\Services\Transaction\AuthorizeTransaction\TransactionAuthorizer;
 use Illuminate\Support\Facades\Http;
 
 /**

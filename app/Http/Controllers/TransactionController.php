@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Application\Transaction\TransferTransaction\TransferCommand;
-use App\Application\Transaction\TransferTransaction\TransferTransactionDTO;
+use App\Application\Commands\Transaction\TransferTransaction\TransferCommand;
+use App\Application\Commands\Transaction\TransferTransaction\TransferTransactionDTO;
 use App\Infrastructure\Transaction\TransactionAuthorizerService;
 use App\Infrastructure\Transaction\TransactionCapsuleRepository;
 use App\Infrastructure\User\UserCapsuleRepository;

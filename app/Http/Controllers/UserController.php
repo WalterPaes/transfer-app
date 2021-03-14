@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Application\User\RegisterUser\RegisterUserCommand;
-use App\Application\User\RegisterUser\RegisterUserDTO;
+
+use App\Application\Commands\User\RegisterUser\RegisterUserCommand;
+use App\Application\Commands\User\RegisterUser\RegisterUserDTO;
 use App\Infrastructure\User\PasswordHash;
 use App\Infrastructure\User\UserCapsuleRepository;
 use Illuminate\Http\JsonResponse;

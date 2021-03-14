@@ -1,15 +1,25 @@
 <?php
 
-namespace App\Application\User\RegisterUser;
+namespace App\Application\Commands\User\RegisterUser;
 
 use App\Domain\User\PasswordEncrypt;
 use App\Domain\User\UserFactory;
 use App\Domain\User\UserRepository;
 use Exception;
 
+/**
+ * Class RegisterUserCommand
+ * @package App\Application\Commands\User\RegisterUser
+ */
 class RegisterUserCommand
 {
+    /**
+     * @var UserRepository
+     */
     private UserRepository $repository;
+    /**
+     * @var PasswordEncrypt
+     */
     private PasswordEncrypt $passwordEncrypt;
 
     /**

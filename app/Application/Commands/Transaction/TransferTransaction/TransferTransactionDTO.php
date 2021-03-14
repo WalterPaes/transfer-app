@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Transaction\TransferTransaction;
+namespace App\Application\Commands\Transaction\TransferTransaction;
 
 /**
  * Class TransferTransactionDTO

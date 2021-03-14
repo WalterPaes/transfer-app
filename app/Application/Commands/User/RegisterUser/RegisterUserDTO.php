@@ -1,13 +1,32 @@
 <?php
 
-namespace App\Application\User\RegisterUser;
+namespace App\Application\Commands\User\RegisterUser;
 
+/**
+ * Class RegisterUserDTO
+ * @package App\Application\Commands\User\RegisterUser
+ */
 class RegisterUserDTO
 {
+    /**
+     * @var mixed|string
+     */
     public string $name;
+    /**
+     * @var mixed|string
+     */
     public string $cpf;
+    /**
+     * @var mixed|string
+     */
     public string $email;
+    /**
+     * @var mixed|string
+     */
     public string $password;
+    /**
+     * @var mixed|string
+     */
     public string $category;
 
     /**

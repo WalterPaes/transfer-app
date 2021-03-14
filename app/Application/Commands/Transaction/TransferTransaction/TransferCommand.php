@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Application\Transaction\TransferTransaction;
+namespace App\Application\Commands\Transaction\TransferTransaction;
 
-use App\Application\Transaction\AuthorizeTransaction\TransactionAuthorizer;
+use App\Application\Services\Transaction\AuthorizeTransaction\TransactionAuthorizer;
 use App\Domain\Transaction\Exception\UnauthorizedTransactionException;
 use App\Domain\Transaction\Transaction;
 use App\Domain\Transaction\TransactionRepository;

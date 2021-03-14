@@ -4,10 +4,21 @@ namespace App\Domain\User;
 
 use App\Domain\User\Exception\InvalidCPFException;
 
+/**
+ * Class CPF
+ * @package App\Domain\User
+ */
 class CPF
 {
+    /**
+     * @var string
+     */
     private string $cpf;
 
+    /**
+     * CPF constructor.
+     * @param string $cpf
+     */
     public function __construct(string $cpf)
     {
         $cpf = preg_replace('/[^0-9]/is', '', $cpf);
