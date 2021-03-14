@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Application\Transaction\AuthorizeTransaction;
+namespace App\Infrastructure\Transaction;
 
+use App\Application\Transaction\AuthorizeTransaction\TransactionAuthorizer;
 use Illuminate\Support\Facades\Http;
 
 /**
- * Class AuthorizeTransactionService
- * @package App\Application\Transaction\AuthorizeTransaction
+ * Class TransactionAuthorizerService
+ * @package App\Infrastructure\Transaction
  */
-class AuthorizeTransactionService implements TransactionAuthorizer
+class TransactionAuthorizerService implements TransactionAuthorizer
 {
     /**
      * @return bool

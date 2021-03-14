@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Application\Transaction\AuthorizeTransaction\AuthorizeTransactionService;
 use App\Application\Transaction\TransferTransaction\TransferCommand;
 use App\Application\Transaction\TransferTransaction\TransferTransactionDTO;
+use App\Infrastructure\Transaction\TransactionAuthorizerService;
 use App\Infrastructure\Transaction\TransactionCapsuleRepository;
 use App\Infrastructure\User\UserCapsuleRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 /**
  * Class TransactionController
@@ -18,7 +20,8 @@ class TransactionController extends Controller
 {
     /**
      * @param Request $request
-     * @throws \Exception
+     * @return JsonResponse
+     * @throws ValidationException
      */
     public function create(Request $request)
     {
@@ -35,7 +38,7 @@ class TransactionController extends Controller
         $command = new TransferCommand(
             new TransactionCapsuleRepository($db),
             new UserCapsuleRepository($db),
-            new AuthorizeTransactionService
+            new TransactionAuthorizerService
         );
 
         $dto = new TransferTransactionDTO($requestBody);
