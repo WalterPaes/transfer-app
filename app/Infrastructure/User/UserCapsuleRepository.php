@@ -2,28 +2,46 @@
 
 namespace App\Infrastructure\User;
 
+use App\Domain\User\Exception\UserNotFoundException;
 use App\Domain\User\User;
 use App\Domain\User\UserFactory;
 use App\Domain\User\UserRepository;
-use Exception;
-use Illuminate\Database\Capsule\Manager as DB;
+use Illuminate\Database\ConnectionInterface;
 
 class UserCapsuleRepository implements UserRepository
 {
+    private ConnectionInterface $db;
+
+    /**
+     * UserCapsuleRepository constructor.
+     * @param ConnectionInterface $db
+     */
+    public function __construct(ConnectionInterface $db)
+    {
+        $this->db = $db;
+    }
+
+
     public function save(User $user): void
     {
-        DB::table('users')
-            ->insert((array)$user);
+        $this->db->table('users')
+            ->insert([
+                'name' => $user->name(),
+                'cpf' => $user->cpf(),
+                'email' => $user->email(),
+                'category' => $user->category(),
+                'password' => $user->password()
+            ]);
     }
 
     public function findById(int $id): User
     {
-        $user = DB::table('users')
+        $user = $this->db->table('users')
             ->where('id', $id)
             ->first();
 
         if (empty($user)) {
-            throw new Exception('user not found', 404);
+            throw new UserNotFoundException($id);
         }
 
         return UserFactory::create(

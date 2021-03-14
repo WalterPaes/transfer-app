@@ -2,6 +2,8 @@
 
 namespace App\Domain\User;
 
+use App\Domain\User\Exception\InvalidEmailException;
+
 class Email
 {
     private string $mail;
@@ -9,9 +11,8 @@ class Email
     public function __construct(string $mail)
     {
         if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-            throw new \Exception('invalid email');
+            throw new InvalidEmailException($mail);
         }
-
         $this->mail = $mail;
     }
 

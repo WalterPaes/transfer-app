@@ -45,9 +45,10 @@ class TransactionController
             response()->json([], 201);
         } catch (Throwable $t) {
             DB::rollBack();
+            $code = $t->getCode() == 0 ? 500 : $t->getCode();
             response()->json([
                 'message' => $t->getMessage()
-            ], $t->getCode());
+            ], $code);
         }
     }
 }

@@ -2,14 +2,14 @@
 
 namespace App\Domain\User;
 
-use Exception;
+use App\Domain\User\Exception\InvalidCategoryException;
 
 class UserFactory
 {
     public static function create(string $name, string $cpf, string $email, string $category): User
     {
         if (!($category == Category::USER || $category == Category::SHOPMAN)) {
-            throw new Exception('invalid user category', 400);
+            throw new InvalidCategoryException($category);
         }
 
         $userCpf = new CPF($cpf);

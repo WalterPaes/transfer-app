@@ -2,14 +2,17 @@
 
 namespace App\Domain\User;
 
+use App\Domain\User\Exception\InvalidCPFException;
+
 class CPF
 {
     private string $cpf;
 
     public function __construct(string $cpf)
     {
+        $cpf = preg_replace('/[^0-9]/is', '', $cpf);
         if (!$this->validate($cpf)) {
-            throw new \Exception('invalid cpf');
+            throw new InvalidCPFException($cpf);
         }
         $this->cpf = $cpf;
     }
@@ -22,8 +25,6 @@ class CPF
      */
     public function validate(string $cpf): bool
     {
-        $cpf = preg_replace('/[^0-9]/is', '', $cpf);
-
         if (strlen($cpf) != 11) {
             return false;
         }

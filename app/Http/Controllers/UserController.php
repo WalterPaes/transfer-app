@@ -23,34 +23,36 @@ class UserController extends Controller
             'password' => ['required', 'min:6'],
         ]);
 
+        $db = DB::connection();
+
         try {
             $requestBody = $request->all();
 
             $command = new RegisterUserCommand(
-                new UserCapsuleRepository,
+                new UserCapsuleRepository($db),
                 new PasswordHash
             );
 
-            $dto = new RegisterUserDTO(
-                $requestBody->name,
-                $requestBody->cpf,
-                $requestBody->email,
-                $requestBody->password,
-                $requestBody->category
-            );
+            $dto = new RegisterUserDTO($requestBody);
 
-            DB::beginTransaction();
+            $db->beginTransaction();
 
             $command->execute($dto);
 
-            DB::commit();
+            $db->commit();
 
-            response()->json([], 201);
+            return response()->json([], 201);
         } catch (Throwable $t) {
-            DB::rollBack();
-            response()->json([
+            $db->rollBack();
+
+            $code = $t->getCode();
+            if ($t->getCode() < 100 || $t->getCode() > 599) {
+                $code = 500;
+            }
+
+            return response()->json([
                 'message' => $t->getMessage()
-            ], $t->getCode());
+            ], $code);
         }
     }
 }

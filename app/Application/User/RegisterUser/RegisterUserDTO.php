@@ -12,19 +12,15 @@ class RegisterUserDTO
 
     /**
      * RegisterUserDTO constructor.
-     * @param string $name
-     * @param string $cpf
-     * @param string $email
-     * @param string $password
-     * @param string $category
+     * @param array $data
      */
-    public function __construct(string $name, string $cpf, string $email, string $password, string $category)
+    public function __construct(array $data)
     {
-        $this->name = $name;
-        $this->cpf = $cpf;
-        $this->email = $email;
-        $this->password = $password;
-        $this->category = $category;
+        $this->name = $data['name'];
+        $this->cpf = $data['cpf'];
+        $this->email = $data['email'];
+        $this->password = $data['password'];
+        $this->category = $data['category'];
     }
 
 
