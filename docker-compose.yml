@@ -2,6 +2,7 @@ version: '3.3'
 
 services:
   php:
+    name: transfer-app
     image: transfer-app
     volumes:
       - ./:/app
@@ -11,6 +12,7 @@ services:
       - database
 
   database:
+    name: transfer-db
     image: mysql:latest
     ports:
       - 3306:3306
