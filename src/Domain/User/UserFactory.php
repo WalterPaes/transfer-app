@@ -9,7 +9,7 @@ class UserFactory
     public static function create(string $name, string $cpf, string $email, string $category): User
     {
         if (!($category == Category::USER || $category == Category::SHOPMAN)) {
-            throw new Exception('invalid user category');
+            throw new Exception('invalid user category', 400);
         }
 
         $userCpf = new CPF($cpf);
