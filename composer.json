@@ -5,7 +5,11 @@
     "robmorgan/phinx": "^0.12.5",
     "illuminate/database": "^8.32",
     "ext-pdo": "*",
-    "vlucas/phpdotenv": "^5.3"
+    "vlucas/phpdotenv": "^5.3",
+    "ext-json": "*",
+    "illuminate/support": "^8.32",
+    "illuminate/validation": "^8.32",
+    "respect/validation": "^2.2"
   },
   "autoload": {
     "psr-4": {

@@ -6,21 +6,40 @@ use App\Infra\Database\PdoConnection;
 use App\Infra\User\PasswordHash;
 use App\Infra\User\UserPdoRepository;
 use Dotenv\Dotenv;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Log\LoggerInterface;
 use Slim\Factory\AppFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-try {
-    $dotenv = Dotenv::createImmutable('../');
-    $dotenv->load();
+error_reporting(E_ERROR);
 
-    $app = AppFactory::create();
-    $app->addBodyParsingMiddleware();
+$dotenv = Dotenv::createImmutable('../');
+$dotenv->load();
 
-    $app->post('/', function (Request $request, Response $response, $args) {
+$app = AppFactory::create();
+$app->addBodyParsingMiddleware();
+$app->addRoutingMiddleware();
+
+$app->post('/users/create', function (Request $request, Response $response, $args) {
+    try {
         $requestBody = $request->getParsedBody();
+
+        $validation = Validator::make($requestBody, [
+            'name' => ['required'],
+            'cpf' => ['required'],
+            'email' => ['required', 'email'],
+            'category' => ['required', Rule::in(['user', 'shopman'])],
+            'password' => ['required', 'min:6'],
+        ]);
+
+        if ($validation->fails()) {
+            var_dump($validation->errors());
+        }
+
         $pdo = PdoConnection::getConnection();
 
         $command = new RegisterUserCommand(
@@ -32,22 +51,49 @@ try {
             $requestBody['name'],
             $requestBody['cpf'],
             $requestBody['email'],
-            "12345",
+            $requestBody['password'],
             $requestBody['category'],
         );
 
+        $pdo->beginTransaction();
+
         $command->execute($dto);
 
-        $response->getBody()->write('ok');
-        return $response;
-    });
+        $pdo->commit();
 
-    $app->run();
-} catch (Throwable $t) {
-    echo $t->getMessage();
-    echo "<br>";
-    echo $t->getFile();
-    echo "<br>";
-    echo $t->getLine();
-}
+        $newResponse = $response->withHeader('Content-type', 'application/json');
+        return $newResponse->withStatus(201);
+    } catch (Throwable $t) {
+        //$pdo->rollBack();
+        throw new Exception($t->getMessage(), $t->getCode());
+    }
+});
+
+$customErrorHandler = function (
+    Request $request,
+    Throwable $exception,
+    bool $displayErrorDetails,
+    bool $logErrors,
+    bool $logErrorDetails,
+    ?LoggerInterface $logger = null
+) use ($app) {
+    $payload = [
+        'message' => $exception->getMessage(),
+    ];
+
+    $response = $app->getResponseFactory()->createResponse();
+    $newResponse = $response->withHeader('Content-type', 'application/json');
+    $newResponse->getBody()->write(
+        json_encode($payload, JSON_UNESCAPED_UNICODE)
+    );
+
+    $code = $exception->getCode() === 0 ? 500 : $exception->getCode();
+
+    return $newResponse->withStatus($code);
+};
+
+$errorMiddleware = $app->addErrorMiddleware(true, true, true);
+$errorMiddleware->setDefaultErrorHandler($customErrorHandler);
+
+$app->run();
 

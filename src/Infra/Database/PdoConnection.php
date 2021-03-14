@@ -2,6 +2,7 @@
 
 namespace App\Infra\Database;
 
+use Exception;
 use PDO;
 use PDOException;
 
@@ -26,7 +27,7 @@ class PdoConnection
                     PDO::ATTR_PERSISTENT => true
                 ]);
             } catch (PDOException $ex) {
-                echo "Erro: " . $ex->getMessage();
+                throw new Exception('database connection error', 500);
             }
         }
         return self::$pdo;
