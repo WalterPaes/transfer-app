@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Application\Commands\Transaction\NotifyTransfer\NotifyTransferCommand;
 use App\Application\Commands\Transaction\TransferTransaction\TransferCommand;
+use App\Application\Commands\Transaction\TransferTransaction\TransferFacade;
 use App\Application\Commands\Transaction\TransferTransaction\TransferTransactionDTO;
 use App\Infrastructure\Transaction\TransactionAuthorizerService;
 use App\Infrastructure\Transaction\TransactionCapsuleRepository;
+use App\Infrastructure\Transaction\TransactionNotifierService;
 use App\Infrastructure\User\UserCapsuleRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -35,17 +38,22 @@ class TransactionController extends Controller
 
         $db = DB::connection();
 
-        $command = new TransferCommand(
+        $dto = new TransferTransactionDTO($requestBody);
+
+        $transferCommand = new TransferCommand(
             new TransactionCapsuleRepository($db),
             new UserCapsuleRepository($db),
             new TransactionAuthorizerService
         );
 
-        $dto = new TransferTransactionDTO($requestBody);
+        $notifyCommand = new NotifyTransferCommand(
+            new TransactionNotifierService
+        );
 
         $db->beginTransaction();
 
-        $command->execute($dto);
+        (new TransferFacade($transferCommand, $notifyCommand))
+            ->execute($dto);
 
         $db->commit();
 
