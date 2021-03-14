@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infra\User;
+namespace App\Infrastructure\User;
 
 use App\Domain\User\PasswordEncrypt;
 
