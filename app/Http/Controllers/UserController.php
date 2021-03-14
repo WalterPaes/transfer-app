@@ -9,7 +9,6 @@ use App\Infrastructure\User\UserCapsuleRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
-use Throwable;
 
 class UserController extends Controller
 {
@@ -25,34 +24,21 @@ class UserController extends Controller
 
         $db = DB::connection();
 
-        try {
-            $requestBody = $request->all();
+        $requestBody = $request->all();
 
-            $command = new RegisterUserCommand(
-                new UserCapsuleRepository($db),
-                new PasswordHash
-            );
+        $command = new RegisterUserCommand(
+            new UserCapsuleRepository($db),
+            new PasswordHash
+        );
 
-            $dto = new RegisterUserDTO($requestBody);
+        $dto = new RegisterUserDTO($requestBody);
 
-            $db->beginTransaction();
+        $db->beginTransaction();
 
-            $command->execute($dto);
+        $command->execute($dto);
 
-            $db->commit();
+        $db->commit();
 
-            return response()->json([], 201);
-        } catch (Throwable $t) {
-            $db->rollBack();
-
-            $code = $t->getCode();
-            if ($t->getCode() < 100 || $t->getCode() > 599) {
-                $code = 500;
-            }
-
-            return response()->json([
-                'message' => $t->getMessage()
-            ], $code);
-        }
+        return response()->json([], 201);
     }
 }

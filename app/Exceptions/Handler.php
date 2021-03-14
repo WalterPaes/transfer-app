@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use PDOException;
-use RuntimeException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
@@ -55,18 +55,23 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        DB::rollBack();
+
         if ($exception instanceof PDOException) {
             return response()->json([
                 'message' => 'database error'
             ], 500);
         }
 
-        if ($exception instanceof RuntimeException) {
-            return response()->json([
-                'message' => $exception->getMessage()
-            ], 500);
+        $code = $exception->getCode();
+        if ($exception->getCode() < 100 || $exception->getCode() > 599) {
+            $code = 500;
         }
 
-        return parent::render($request, $exception);
+        return response()->json([
+            'message' => $exception->getMessage()
+        ], $code);
+
+        // return parent::render($request, $exception);
     }
 }
