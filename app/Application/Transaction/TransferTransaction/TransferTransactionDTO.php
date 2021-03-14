@@ -2,24 +2,33 @@
 
 namespace App\Application\TransferTransaction;
 
+/**
+ * Class TransferTransactionDTO
+ * @package App\Application\TransferTransaction
+ */
 class TransferTransactionDTO
 {
+    /**
+     * @var float|mixed
+     */
     public float $value;
+    /**
+     * @var int|mixed
+     */
     public int $payer;
+    /**
+     * @var int|mixed
+     */
     public int $payee;
 
     /**
      * TransferTransactionDTO constructor.
-     * @param float $value
-     * @param int $payer
-     * @param int $payee
+     * @param array $data
      */
-    public function __construct(float $value, int $payer, int $payee)
+    public function __construct(array $data)
     {
-        $this->value = $value;
-        $this->payer = $payer;
-        $this->payee = $payee;
+        $this->value = $data['value'];
+        $this->payer = $data['payer'];
+        $this->payee = $data['payee'];
     }
-
-
 }

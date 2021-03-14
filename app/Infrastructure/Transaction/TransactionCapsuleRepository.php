@@ -4,13 +4,39 @@ namespace App\Infrastructure\Transaction;
 
 use App\Domain\Transaction\Transaction;
 use App\Domain\Transaction\TransactionRepository;
-use Illuminate\Database\Capsule\Manager as DB;
+use Illuminate\Database\ConnectionInterface;
 
+/**
+ * Class TransactionCapsuleRepository
+ * @package App\Infrastructure\Transaction
+ */
 class TransactionCapsuleRepository implements TransactionRepository
 {
+    /**
+     * @var ConnectionInterface
+     */
+    private ConnectionInterface $db;
+
+    /**
+     * TransactionCapsuleRepository constructor.
+     * @param ConnectionInterface $db
+     */
+    public function __construct(ConnectionInterface $db)
+    {
+        $this->db = $db;
+    }
+
+    /**
+     * @param Transaction $transaction
+     * @return bool
+     */
     public function save(Transaction $transaction): bool
     {
-        DB::table('transactions')
-            ->insert((array)$transaction);
+        $this->db->table('transactions')
+            ->insert([
+                'value' => $transaction->value(),
+                'payee' => $transaction->payee()->id(),
+                'payer' => $transaction->payer()->id(),
+            ]);
     }
 }

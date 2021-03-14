@@ -9,10 +9,17 @@ use App\Infrastructure\Transaction\TransactionCapsuleRepository;
 use App\Infrastructure\User\UserCapsuleRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Throwable;
 
+/**
+ * Class TransactionController
+ * @package App\Http\Controllers
+ */
 class TransactionController
 {
+    /**
+     * @param Request $request
+     * @throws \Exception
+     */
     public function create(Request $request)
     {
         $this->validate($request, [
@@ -21,34 +28,24 @@ class TransactionController
             'payer', ['required', 'exists:users,id']
         ]);
 
-        try {
-            $requestBody = $request->all();
+        $requestBody = $request->all();
 
-            $command = new TransferCommand(
-                new TransactionCapsuleRepository,
-                new UserCapsuleRepository,
-                new AuthorizeTransactionService
-            );
+        $db = DB::connection();
 
-            $dto = new TransferTransactionDTO(
-                $requestBody->value,
-                $requestBody->payer,
-                $requestBody->payee,
-            );
+        $command = new TransferCommand(
+            new TransactionCapsuleRepository($db),
+            new UserCapsuleRepository($db),
+            new AuthorizeTransactionService
+        );
 
-            DB::beginTransaction();
+        $dto = new TransferTransactionDTO($requestBody);
 
-            $command->execute($dto);
+        $db->beginTransaction();
 
-            DB::commit();
+        $command->execute($dto);
 
-            response()->json([], 201);
-        } catch (Throwable $t) {
-            DB::rollBack();
-            $code = $t->getCode() == 0 ? 500 : $t->getCode();
-            response()->json([
-                'message' => $t->getMessage()
-            ], $code);
-        }
+        $db->commit();
+
+        response()->json([], 201);
     }
 }
