@@ -17,8 +17,8 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => ['required'],
-            'cpf' => ['required'],
-            'email' => ['required', 'email'],
+            'cpf' => ['required', 'unique:users,cpf'],
+            'email' => ['required', 'unique:users,email'],
             'category' => ['required', Rule::in(['user', 'shopman'])],
             'password' => ['required', 'min:6'],
         ]);
