@@ -13,6 +13,6 @@ class IsNotTransferibleException extends \Exception
      */
     public function __construct()
     {
-        parent::__construct("The user cannot do transfers", 403);
+        parent::__construct("This user cannot be a payer", 403);
     }
 }

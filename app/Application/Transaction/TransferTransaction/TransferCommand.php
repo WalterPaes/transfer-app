@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\TransferTransaction;
+namespace App\Application\Transaction\TransferTransaction;
 
 use App\Application\Transaction\AuthorizeTransaction\TransactionAuthorizer;
 use App\Domain\Transaction\Exception\UnauthorizedTransactionException;

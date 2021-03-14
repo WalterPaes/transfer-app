@@ -28,9 +28,8 @@ class TransactionCapsuleRepository implements TransactionRepository
 
     /**
      * @param Transaction $transaction
-     * @return bool
      */
-    public function save(Transaction $transaction): bool
+    public function save(Transaction $transaction): void
     {
         $this->db->table('transactions')
             ->insert([

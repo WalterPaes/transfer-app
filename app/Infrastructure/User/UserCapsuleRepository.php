@@ -8,8 +8,15 @@ use App\Domain\User\UserFactory;
 use App\Domain\User\UserRepository;
 use Illuminate\Database\ConnectionInterface;
 
+/**
+ * Class UserCapsuleRepository
+ * @package App\Infrastructure\User
+ */
 class UserCapsuleRepository implements UserRepository
 {
+    /**
+     * @var ConnectionInterface
+     */
     private ConnectionInterface $db;
 
     /**
@@ -21,7 +28,9 @@ class UserCapsuleRepository implements UserRepository
         $this->db = $db;
     }
 
-
+    /**
+     * @param User $user
+     */
     public function save(User $user): void
     {
         $this->db->table('users')
@@ -34,6 +43,10 @@ class UserCapsuleRepository implements UserRepository
             ]);
     }
 
+    /**
+     * @param int $id
+     * @return User
+     */
     public function findById(int $id): User
     {
         $user = $this->db->table('users')
@@ -44,7 +57,8 @@ class UserCapsuleRepository implements UserRepository
             throw new UserNotFoundException($id);
         }
 
-        return UserFactory::create(
+        return UserFactory::createWithId(
+            $user->id,
             $user->name,
             $user->cpf,
             $user->email,

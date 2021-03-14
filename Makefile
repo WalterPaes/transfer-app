@@ -6,8 +6,12 @@ stop:
 	sudo docker-compose stop
 down:
 	sudo docker-compose down
+install:
+	composer install
 build-and-run:
 	make build
 	make run
 migrate:
 	php artisan migrate
+refresh-migrations:
+	php artisan migrate:fresh

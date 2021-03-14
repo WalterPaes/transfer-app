@@ -2,7 +2,14 @@
 
 namespace App\Domain\Transaction;
 
+/**
+ * Interface TransactionRepository
+ * @package App\Domain\Transaction
+ */
 interface TransactionRepository
 {
-    public function save(Transaction $transaction): bool;
+    /**
+     * @param Transaction $transaction
+     */
+    public function save(Transaction $transaction): void;
 }
