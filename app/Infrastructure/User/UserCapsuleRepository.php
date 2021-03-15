@@ -31,17 +31,26 @@ class UserCapsuleRepository implements UserRepository
     /**
      * @param User $user
      */
-    public function save(User $user): void
+    public function saveOrUpdate(User $user): void
     {
+        $data = [
+            'name' => $user->name(),
+            'cpf' => $user->cpf(),
+            'email' => $user->email(),
+            'category' => $user->category(),
+            'password' => $user->password(),
+            'wallet' => $user->wallet()->balance()
+        ];
+
+        if ((bool)$user->id()) {
+            $this->db->table('users')
+                ->where('id', $user->id())
+                ->update($data);
+            return;
+        }
+
         $this->db->table('users')
-            ->insert([
-                'name' => $user->name(),
-                'cpf' => $user->cpf(),
-                'email' => $user->email(),
-                'category' => $user->category(),
-                'password' => $user->password(),
-                'wallet' => $user->wallet()->balance()
-            ]);
+            ->insert($data);
     }
 
     /**
@@ -66,17 +75,8 @@ class UserCapsuleRepository implements UserRepository
                 'email' => $user->email,
                 'category' => $user->category,
                 'wallet' => $user->wallet,
-            ],
-            );
-    }
-
-    /**
-     * @param User $user
-     */
-    public function update(User $user): void
-    {
-        $this->db->table('users')
-            ->where('id', 1)
-            ->update([]);
+                'password' => $user->password
+            ]
+        );
     }
 }

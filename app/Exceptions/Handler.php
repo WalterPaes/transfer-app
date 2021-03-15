@@ -59,7 +59,7 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof PDOException) {
             return response()->json([
-                'message' => 'database error'
+                'message' => $exception->getMessage()
             ], 500);
         }
 

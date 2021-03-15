@@ -13,10 +13,9 @@ class UserFactory
 {
     /**
      * @param array $data
-     * @param string|null $password
      * @return User
      */
-    public static function create(array $data, string $password = ""): User
+    public static function create(array $data): User
     {
         $category = $data['category'];
         if (!($category == Category::USER || $category == Category::SHOPMAN)) {
@@ -30,15 +29,17 @@ class UserFactory
         $wallet = isset($data['wallet']) ? $data['wallet'] : 0;
         $userWallet = new Wallet($wallet);
 
+        $password = $data['password'];
+
         if ($category == Category::SHOPMAN) {
             return new ShopmanUser($name, $userCpf, $userEmail, $userWallet, $password);
         }
         return new CommonUser($name, $userCpf, $userEmail, $userWallet, $password);
     }
 
-    public static function createWithId(int $id, array $data, string $password = ""): User
+    public static function createWithId(int $id, array $data): User
     {
-        $user = self::create($data, $password);
+        $user = self::create($data);
         $user->setId($id);
         return $user;
     }

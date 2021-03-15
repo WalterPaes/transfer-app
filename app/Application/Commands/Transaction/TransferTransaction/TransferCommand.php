@@ -74,6 +74,8 @@ class TransferCommand
             throw new UnauthorizedTransactionException();
         }
 
+        $this->userRepository->saveOrUpdate($transaction->payee());
+        $this->userRepository->saveOrUpdate($transaction->payer());
         $this->transactionRepository->save($transaction);
     }
 }

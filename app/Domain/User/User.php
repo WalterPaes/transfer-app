@@ -60,6 +60,7 @@ abstract class User
         $this->email = $email;
         $this->wallet = $wallet;
         $this->password = $password;
+        $this->id = 0;
     }
 
     /**

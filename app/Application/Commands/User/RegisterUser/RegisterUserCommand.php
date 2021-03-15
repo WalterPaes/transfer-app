@@ -44,9 +44,8 @@ class RegisterUserCommand
             'cpf' => $registerUserDTO->cpf,
             'email' => $registerUserDTO->email,
             'category' => $registerUserDTO->category,
-        ],
-            $this->passwordEncrypt->encrypt($registerUserDTO->password)
-        );
-        $this->repository->save($user);
+            'password' => $this->passwordEncrypt->encrypt($registerUserDTO->password)
+        ]);
+        $this->repository->saveOrUpdate($user);
     }
 }

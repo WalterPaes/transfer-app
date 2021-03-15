@@ -11,16 +11,11 @@ interface UserRepository
     /**
      * @param User $user
      */
-    public function save(User $user): void;
+    public function saveOrUpdate(User $user): void;
 
     /**
      * @param int $id
      * @return User
      */
     public function findById(int $id): User;
-
-    /**
-     * @param User $user
-     */
-    public function update(User $user): void;
 }
