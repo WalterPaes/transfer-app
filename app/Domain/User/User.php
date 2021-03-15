@@ -2,6 +2,8 @@
 
 namespace App\Domain\User;
 
+use App\Domain\Wallet\Wallet;
+
 /**
  * Class User
  * @package App\Domain\User
@@ -32,18 +34,24 @@ abstract class User
      * @var string
      */
     protected string $password;
+    /**
+     * @var Wallet
+     */
+    protected Wallet $wallet;
 
     /**
      * User constructor.
      * @param string $name
      * @param CPF $cpf
      * @param Email $email
+     * @param Wallet $wallet
      */
-    public function __construct(string $name, CPF $cpf, Email $email)
+    public function __construct(string $name, CPF $cpf, Email $email, Wallet $wallet)
     {
         $this->name = $name;
         $this->cpf = $cpf;
         $this->email = $email;
+        $this->wallet = $wallet;
     }
 
     /**
@@ -116,5 +124,13 @@ abstract class User
     public function password(): string
     {
         return $this->password;
+    }
+
+    /**
+     * @return Wallet
+     */
+    public function wallet(): Wallet
+    {
+        return $this->wallet;
     }
 }

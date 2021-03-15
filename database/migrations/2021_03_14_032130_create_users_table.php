@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email', 50)->unique();
             $table->string('category', 15);
             $table->string('password');
+            $table->decimal('wallet');
             $table->timestamps();
         });
     }

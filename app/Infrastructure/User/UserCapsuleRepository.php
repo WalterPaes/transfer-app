@@ -39,7 +39,8 @@ class UserCapsuleRepository implements UserRepository
                 'cpf' => $user->cpf(),
                 'email' => $user->email(),
                 'category' => $user->category(),
-                'password' => $user->password()
+                'password' => $user->password(),
+                'wallet' => $user->wallet()->balance()
             ]);
     }
 
@@ -59,10 +60,13 @@ class UserCapsuleRepository implements UserRepository
 
         return UserFactory::createWithId(
             $user->id,
-            $user->name,
-            $user->cpf,
-            $user->email,
-            $user->category
+            [
+                'name' => $user->name,
+                'cpf' => $user->cpf,
+                'email' => $user->email,
+            ],
+            $user->category,
+            $user->wallet
         );
     }
 }

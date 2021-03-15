@@ -39,10 +39,11 @@ class RegisterUserCommand
      */
     public function execute(RegisterUserDTO $registerUserDTO): void
     {
-        $user = UserFactory::create(
-            $registerUserDTO->name,
-            $registerUserDTO->cpf,
-            $registerUserDTO->email,
+        $user = UserFactory::create([
+            'name' => $registerUserDTO->name,
+            'cpf' => $registerUserDTO->cpf,
+            'email' => $registerUserDTO->email,
+        ],
             $registerUserDTO->category
         );
         $user->setPassword($this->passwordEncrypt->encrypt($registerUserDTO->password));
