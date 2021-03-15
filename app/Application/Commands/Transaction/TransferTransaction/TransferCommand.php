@@ -3,6 +3,7 @@
 namespace App\Application\Commands\Transaction\TransferTransaction;
 
 use App\Application\Services\Transaction\AuthorizeTransaction\TransactionAuthorizer;
+use App\Domain\Amount;
 use App\Domain\Transaction\Exception\UnauthorizedTransactionException;
 use App\Domain\Transaction\Transaction;
 use App\Domain\Transaction\TransactionRepository;
@@ -62,7 +63,12 @@ class TransferCommand
         $payee = $this->userRepository
             ->findById($transferTransactionDTO->payee);
 
-        $transaction = new Transaction($transferTransactionDTO->value, $payee, $payer);
+        $transaction = new Transaction(
+            new Amount($transferTransactionDTO->value),
+            $payee,
+            $payer
+        );
+        $transaction->transfer();
 
         if (!$this->authorizer->authorize()) {
             throw new UnauthorizedTransactionException();

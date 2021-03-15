@@ -16,19 +16,17 @@ class CommonUser extends User
      * @param CPF $cpf
      * @param Email $email
      * @param Wallet $wallet
-     * @param int|null $id
-     * @param string|null $password
+     * @param string $password
      */
     public function __construct(
         string $name,
         CPF $cpf,
         Email $email,
         Wallet $wallet,
-        int $id = null,
-        string $password = null
+        string $password = ""
     )
     {
-        parent::__construct($name, $cpf, $email, $wallet, $id, $password);
+        parent::__construct($name, $cpf, $email, $wallet, $password);
         $this->category = new Category(Category::USER);
     }
 }

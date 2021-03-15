@@ -45,23 +45,20 @@ abstract class User
      * @param CPF $cpf
      * @param Email $email
      * @param Wallet $wallet
-     * @param int|null $id
-     * @param string|null $password
+     * @param string $password
      */
     public function __construct(
         string $name,
         CPF $cpf,
         Email $email,
         Wallet $wallet,
-        int $id = null,
-        string $password = null
+        string $password = ""
     )
     {
         $this->name = $name;
         $this->cpf = $cpf;
         $this->email = $email;
         $this->wallet = $wallet;
-        $this->id = $id;
         $this->password = $password;
     }
 
@@ -71,6 +68,14 @@ abstract class User
     public function isTransferable(): bool
     {
         return $this->category == Category::USER;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id)
+    {
+        $this->id = $id;
     }
 
     /**

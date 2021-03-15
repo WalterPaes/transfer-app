@@ -2,6 +2,7 @@
 
 namespace App\Domain\Transaction;
 
+use App\Domain\Amount;
 use App\Domain\User\User;
 
 /**
@@ -11,9 +12,9 @@ use App\Domain\User\User;
 class Transaction
 {
     /**
-     * @var float
+     * @var Amount
      */
-    protected float $value;
+    protected Amount $value;
     /**
      * @var User
      */
@@ -25,15 +26,25 @@ class Transaction
 
     /**
      * Transaction constructor.
-     * @param float $value
+     * @param Amount $value
      * @param User $payee
      * @param User $payer
      */
-    public function __construct(float $value, User $payee, User $payer)
+    public function __construct(Amount $value, User $payee, User $payer)
     {
         $this->value = $value;
         $this->payer = $payer;
         $this->payee = $payee;
+    }
+
+    public function transfer()
+    {
+        $this->payer
+            ->wallet()
+            ->withdraw($this->value->amount());
+        $this->payee
+            ->wallet()
+            ->deposit($this->value->amount());
     }
 
     /**
@@ -41,7 +52,7 @@ class Transaction
      */
     public function value(): float
     {
-        return $this->value;
+        return $this->value->amount();
     }
 
     /**

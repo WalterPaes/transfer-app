@@ -19,8 +19,10 @@ class Amount
      */
     public function __construct(float $amount)
     {
-        if (!filter_var($amount, FILTER_VALIDATE_FLOAT)) {
-            throw new InvalidAmountException($amount);
+        if ($amount > 0) {
+            if (!filter_var($amount, FILTER_VALIDATE_FLOAT)) {
+                throw new InvalidAmountException($amount);
+            }
         }
         $this->amount = $amount;
     }

@@ -14,6 +14,6 @@ class InvalidAmountException extends \InvalidArgumentException
      */
     public function __construct(float $value)
     {
-        parent::__construct("'{$value}' is an Invalid Amount Value");
+        parent::__construct("'{$value}' is an Invalid Amount Value", 400);
     }
 }

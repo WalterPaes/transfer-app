@@ -45,7 +45,7 @@ class RegisterUserCommand
             'email' => $registerUserDTO->email,
             'category' => $registerUserDTO->category,
         ],
-            $password = $this->passwordEncrypt->encrypt($registerUserDTO->password)
+            $this->passwordEncrypt->encrypt($registerUserDTO->password)
         );
         $this->repository->save($user);
     }
