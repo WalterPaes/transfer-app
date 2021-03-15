@@ -53,6 +53,10 @@ class TransferCommand
      */
     public function execute(TransferTransactionDTO $transferTransactionDTO): void
     {
+        if ($transferTransactionDTO->payer == $transferTransactionDTO->payee) {
+            throw new Exception('Payer cannot be the same of Payee');
+        }
+
         $payer = $this->userRepository
             ->findById($transferTransactionDTO->payer);
 
