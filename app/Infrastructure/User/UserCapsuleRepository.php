@@ -58,15 +58,11 @@ class UserCapsuleRepository implements UserRepository
             throw new UserNotFoundException($id);
         }
 
-        return UserFactory::createWithId(
-            $user->id,
-            [
-                'name' => $user->name,
-                'cpf' => $user->cpf,
-                'email' => $user->email,
-            ],
-            $user->category,
-            $user->wallet
-        );
+        return UserFactory::create([
+            'name' => $user->name,
+            'cpf' => $user->cpf,
+            'email' => $user->email,
+            'category' => $user->category,
+        ], $user->id);
     }
 }

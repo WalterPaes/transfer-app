@@ -2,21 +2,31 @@
 
 namespace App\Domain\Wallet;
 
-use App\Domain\User\User;
+use App\Domain\Amount;
 
+/**
+ * Class Wallet
+ * @package App\Domain\Wallet
+ */
 class Wallet
 {
-    private User $owner;
-    private float $balance;
+    /**
+     * @var Amount
+     */
+    private Amount $balance;
 
+    /**
+     * Wallet constructor.
+     * @param float $balance
+     */
     public function __construct(float $balance = 0)
     {
-        $this->balance = $balance;
+        $this->balance = new Amount($balance);
     }
 
     public function balance(): float
     {
-        return $this->balance;
+        return $this->balance->amount();
     }
 
     public function deposit()

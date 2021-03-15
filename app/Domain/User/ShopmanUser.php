@@ -16,10 +16,19 @@ class ShopmanUser extends User
      * @param CPF $cpf
      * @param Email $email
      * @param Wallet $wallet
+     * @param int|null $id
+     * @param string|null $password
      */
-    public function __construct(string $name, CPF $cpf, Email $email, Wallet $wallet)
+    public function __construct(
+        string $name,
+        CPF $cpf,
+        Email $email,
+        Wallet $wallet,
+        int $id = null,
+        string $password = null
+    )
     {
-        parent::__construct($name, $cpf, $email, $wallet);
+        parent::__construct($name, $cpf, $email, $wallet, $id, $password);
         $this->category = new Category(Category::SHOPMAN);
     }
 }

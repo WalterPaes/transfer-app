@@ -43,10 +43,10 @@ class RegisterUserCommand
             'name' => $registerUserDTO->name,
             'cpf' => $registerUserDTO->cpf,
             'email' => $registerUserDTO->email,
+            'category' => $registerUserDTO->category,
         ],
-            $registerUserDTO->category
+            $password = $this->passwordEncrypt->encrypt($registerUserDTO->password)
         );
-        $user->setPassword($this->passwordEncrypt->encrypt($registerUserDTO->password));
         $this->repository->save($user);
     }
 }
