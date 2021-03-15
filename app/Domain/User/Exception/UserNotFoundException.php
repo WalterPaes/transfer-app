@@ -11,9 +11,15 @@ class UserNotFoundException extends \DomainException
     /**
      * UserNotFoundException constructor.
      * @param int $id
+     * @param string $email
      */
-    public function __construct(int $id)
+    public function __construct(int $id, string $email = '')
     {
-        parent::__construct("The user of id '{$id}' not found", 404);
+        $message = "User of %s '%v' not found";
+        $code = 404;
+        if (!empty($email)) {
+            parent::__construct(sprintf($message, ['email', $email]), $code);
+        }
+        parent::__construct(sprintf($message, ['id', $id]), $code);
     }
 }

@@ -14,9 +14,14 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return "Welcome to Transfer App";
 });
 
-$router->post('/users', 'UserController@create');
+$router->post('/login', 'AuthController@login');
 
-$router->post('/transaction', 'TransactionController@create');
+$router->group(['middleware' => 'auth'], function () use ($router) {
+    $router->post('/users', 'UserController@create');
+    $router->post('/transaction', 'TransactionController@create');
+});
+
+

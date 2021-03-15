@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\User;
 
+use App\Domain\User\Email;
 use App\Domain\User\Exception\UserNotFoundException;
 use App\Domain\User\User;
 use App\Domain\User\UserFactory;
@@ -65,6 +66,33 @@ class UserCapsuleRepository implements UserRepository
 
         if (empty($user)) {
             throw new UserNotFoundException($id);
+        }
+
+        return UserFactory::createWithId(
+            $user->id,
+            [
+                'name' => $user->name,
+                'cpf' => $user->cpf,
+                'email' => $user->email,
+                'category' => $user->category,
+                'wallet' => $user->wallet,
+                'password' => $user->password
+            ]
+        );
+    }
+
+    /**
+     * @param Email $email
+     * @return User
+     */
+    public function findByEmail(Email $email): User
+    {
+        $user = $this->db->table('users')
+            ->where('email', $email->mail())
+            ->first();
+
+        if (empty($user)) {
+            throw new UserNotFoundException(0, $email);
         }
 
         return UserFactory::createWithId(

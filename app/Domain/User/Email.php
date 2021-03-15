@@ -30,6 +30,14 @@ class Email
     /**
      * @return string
      */
+    public function mail(): string
+    {
+        return $this->mail;
+    }
+
+    /**
+     * @return string
+     */
     public function __toString(): string
     {
         return $this->mail;
