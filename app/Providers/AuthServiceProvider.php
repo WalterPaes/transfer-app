@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Domain\User\Email;
 use App\Infrastructure\User\UserCapsuleRepository;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
@@ -38,7 +39,9 @@ class AuthServiceProvider extends ServiceProvider
 
             $db = DB::connection();
             $repository = new UserCapsuleRepository($db);
-            return $repository->findByEmail($data->email);
+            return $repository->findByEmail(
+                new Email($data->email)
+            );
         });
     }
 }

@@ -69,7 +69,9 @@ class Handler extends ExceptionHandler
         }
 
         return response()->json([
-            'message' => $exception->getMessage()
+            'message' => $exception->getMessage(),
+            'line' => $exception->getLine(),
+            'file' => $exception->getFile()
         ], $code);
     }
 }

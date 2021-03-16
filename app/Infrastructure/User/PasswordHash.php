@@ -26,6 +26,6 @@ class PasswordHash implements PasswordEncrypt
      */
     public function check(string $password, string $hash): bool
     {
-        return $this->encrypt($password) === $hash;
+        return password_verify($password, $hash);
     }
 }
