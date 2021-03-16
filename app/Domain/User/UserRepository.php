@@ -18,4 +18,10 @@ interface UserRepository
      * @return User
      */
     public function findById(int $id): User;
+
+    /**
+     * @param Email $email
+     * @return User
+     */
+    public function findByEmail(Email $email): User;
 }

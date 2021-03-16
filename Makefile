@@ -6,7 +6,7 @@ stop:
 	sudo docker-compose stop
 down:
 	sudo docker-compose down
-install:
+install-dependencies:
 	composer install
 build-and-run:
 	make build
@@ -15,3 +15,5 @@ migrate:
 	php artisan migrate
 refresh-migrations:
 	php artisan migrate:fresh
+run-tests:
+	vendor/bin/phpunit
