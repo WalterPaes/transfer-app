@@ -15,12 +15,20 @@ class UserInMemoryRepository implements UserRepository
     private array $users;
 
     /**
+     * UserInMemoryRepository constructor.
+     */
+    public function __construct()
+    {
+        $this->users = [];
+    }
+
+    /**
      * @param User $user
      */
     public function saveOrUpdate(User $user): void
     {
         if ((bool)$user->id()) {
-            $this->users[$user->id()] = $user;
+            $this->users[$user->id() - 1] = $user;
         }
         $this->users[] = $user;
     }
@@ -31,7 +39,7 @@ class UserInMemoryRepository implements UserRepository
      */
     public function findById(int $id): User
     {
-        return $this->users[$id];
+        return $this->users[$id - 1];
     }
 
     /**
@@ -40,12 +48,11 @@ class UserInMemoryRepository implements UserRepository
      */
     public function findByEmail(Email $email): User
     {
-        $result = array_filter($this->users, function ($user) use ($email) {
+        foreach ($this->users as $user) {
             if ($user->email() === $email->mail()) {
                 return $user;
-            };
-            throw new UserNotFoundException(0, $email->mail());
-        });
-        return $result[0];
+            }
+        }
+        throw new UserNotFoundException(0, $email->mail());
     }
 }
