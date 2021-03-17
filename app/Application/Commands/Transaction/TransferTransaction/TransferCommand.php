@@ -67,7 +67,7 @@ class TransferCommand
         $payee = $this->userRepository
             ->findById($transferTransactionDTO->payee);
 
-        $transaction = new Transaction(
+        $transaction = $transaction = new Transaction(
             new Amount($transferTransactionDTO->value),
             $payee,
             $payer
