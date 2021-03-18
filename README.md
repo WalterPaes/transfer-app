@@ -4,7 +4,7 @@
 ## Initial Config
 - Build and run container
 ```
-make build and run
+make build-and-run
 ```
 
 - Install dependencies
@@ -40,6 +40,7 @@ make migrate
 ```
 
 ## API Endpoints
+When the docker container is up, the access url is `http://localhost:8000`
 
 ### POST
 `Login` [/login](#login) <br/>
@@ -121,5 +122,5 @@ ERROR 500
 
 ## Tests
 ```
-make tests
+make run-tests
 ```
